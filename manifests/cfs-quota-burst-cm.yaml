@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  app: apache-demo
+  cpu-burst-config: '{"policy": "cfsQuotaBurstOnly", "cpuBurstPercent": 100, "cfsQuotaBurstPercent":
+    300, "cfsQuotaBurstPeriodSeconds": -1}'
+kind: ConfigMap
+metadata:
+  name: cfs-quota-burst-cm
+  namespace: koordinator-system
