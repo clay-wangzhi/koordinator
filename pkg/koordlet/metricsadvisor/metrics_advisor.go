@@ -22,10 +22,10 @@ import (
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/framework"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/resourceexecutor"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 )
 
 type MetricAdvisor interface {

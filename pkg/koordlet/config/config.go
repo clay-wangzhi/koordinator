@@ -19,12 +19,12 @@ package config
 import (
 	"flag"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	maframework "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/framework"
-	qmframework "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager/framework"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/resourceexecutor"
-	statesinformerimpl "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer/impl"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	maframework "github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
+	qmframework "github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
+	statesinformerimpl "github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer/impl"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
 	"k8s.io/client-go/rest"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 )

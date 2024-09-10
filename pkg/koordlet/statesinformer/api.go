@@ -19,7 +19,7 @@ package statesinformer
 import (
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/util"
+	"github.com/clay-wangzhi/koordinator/pkg/util"
 )
 
 type PodMeta struct {

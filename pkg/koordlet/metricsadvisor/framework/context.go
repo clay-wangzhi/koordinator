@@ -22,7 +22,7 @@ import (
 
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
 )
 
 type Context struct {

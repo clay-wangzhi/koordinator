@@ -20,9 +20,9 @@ import (
 	"flag"
 	"time"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/cmd/koordlet/options"
-	agent "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/config"
+	"github.com/clay-wangzhi/koordinator/cmd/koordlet/options"
+	agent "github.com/clay-wangzhi/koordinator/pkg/koordlet"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/config"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/manager/signals"

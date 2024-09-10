@@ -23,8 +23,8 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/util"
 )
 
 // GetContainerCgroupPath gets the file path of the given container's cgroup.

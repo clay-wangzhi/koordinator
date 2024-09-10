@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
 )
 
 func CollectNodeMetrics(metricCache metriccache.MetricCache, start, end time.Time, queryMeta metriccache.MetricMeta) (metriccache.AggregateResult, error) {

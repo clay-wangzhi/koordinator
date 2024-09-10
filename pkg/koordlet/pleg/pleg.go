@@ -24,8 +24,8 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/klog/v2"
 
-	koordletutil "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
+	koordletutil "github.com/clay-wangzhi/koordinator/pkg/koordlet/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
 )
 
 const (

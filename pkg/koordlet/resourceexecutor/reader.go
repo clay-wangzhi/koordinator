@@ -20,7 +20,7 @@ import (
 	"errors"
 	"fmt"
 
-	sysutil "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
+	sysutil "github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
 )
 
 var ErrResourceNotRegistered = errors.New("resource not registered")

@@ -26,7 +26,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 )
 
 const (

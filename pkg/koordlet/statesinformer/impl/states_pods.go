@@ -28,11 +28,11 @@ import (
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/pleg"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
-	koordletutil "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/pleg"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
+	koordletutil "github.com/clay-wangzhi/koordinator/pkg/koordlet/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/util"
 )
 
 const (

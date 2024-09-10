@@ -23,9 +23,9 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/framework"
-	koordletutil "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
+	koordletutil "github.com/clay-wangzhi/koordinator/pkg/koordlet/util"
 )
 
 const (

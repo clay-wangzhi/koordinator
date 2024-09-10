@@ -1,4 +1,4 @@
-module github.com/clay-wangzhi/cfs-quota-burst
+module github.com/clay-wangzhi/koordinator
 
 go 1.20
 

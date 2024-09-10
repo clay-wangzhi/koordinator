@@ -17,8 +17,8 @@ limitations under the License.
 package plugins
 
 import (
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager/framework"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager/plugins/cpuburst"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/plugins/cpuburst"
 )
 
 var (

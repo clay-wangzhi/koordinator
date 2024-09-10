@@ -1,5 +1,5 @@
 FROM --platform=$TARGETPLATFORM golang:1.20 as builder
-WORKDIR /go/src/github.com/clay-wangzhi/cfs-quota-burst
+WORKDIR /go/src/github.com/clay-wangzhi/koordinator
 
 ARG VERSION
 ARG TARGETARCH
@@ -21,5 +21,5 @@ RUN go build -a -o koordlet cmd/koordlet/main.go
 
 FROM --platform=$TARGETPLATFORM ubuntu:22.04
 WORKDIR /
-COPY --from=builder /go/src/github.com/clay-wangzhi/cfs-quota-burst/koordlet .
+COPY --from=builder /go/src/github.com/clay-wangzhi/koordinator/koordlet .
 ENTRYPOINT ["/koordlet"]

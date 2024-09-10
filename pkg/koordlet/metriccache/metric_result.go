@@ -22,7 +22,7 @@ import (
 
 	promstorage "github.com/prometheus/prometheus/storage"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/util"
+	"github.com/clay-wangzhi/koordinator/pkg/util"
 )
 
 // MetricResult contains s set of series, it can also produce final result like aggregation value

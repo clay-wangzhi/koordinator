@@ -25,7 +25,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
 )
 
 const cpuCmdTimeout = 5 * time.Second // maybe run slowly on some platforms

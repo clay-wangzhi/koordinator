@@ -17,7 +17,7 @@ limitations under the License.
 package metriccache
 
 import (
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util"
 )
 
 type NodeCPUInfo util.LocalCPUInfo

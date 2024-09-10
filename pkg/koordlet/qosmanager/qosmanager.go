@@ -24,12 +24,12 @@ import (
 	clientset "k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	ma "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/framework"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager/framework"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager/plugins"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/resourceexecutor"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	ma "github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/plugins"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 )
 
 type QOSManager interface {

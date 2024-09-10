@@ -17,9 +17,9 @@ limitations under the License.
 package framework
 
 import (
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/resourceexecutor"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 )
 
 type Options struct {

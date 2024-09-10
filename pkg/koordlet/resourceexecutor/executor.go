@@ -23,8 +23,8 @@ import (
 
 	"k8s.io/klog/v2"
 
-	sysutil "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/util/cache"
+	sysutil "github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/util/cache"
 )
 
 var _ ResourceUpdateExecutor = &ResourceUpdateExecutorImpl{}

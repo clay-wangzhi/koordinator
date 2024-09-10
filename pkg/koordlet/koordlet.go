@@ -28,14 +28,14 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/config"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/qosmanager"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/resourceexecutor"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
-	statesinformerimpl "github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer/impl"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/util/system"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/config"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
+	statesinformerimpl "github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer/impl"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/util/system"
 )
 
 var (

@@ -17,10 +17,10 @@ limitations under the License.
 package metricsadvisor
 
 import (
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/collectors/nodeinfo"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/collectors/noderesource"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/collectors/podthrottled"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metricsadvisor/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/nodeinfo"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/noderesource"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/podthrottled"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
 )
 
 // NOTE: map variables in this file can be overwritten for extension

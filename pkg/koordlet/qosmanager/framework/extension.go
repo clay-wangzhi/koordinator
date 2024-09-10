@@ -20,8 +20,8 @@ import (
 	"flag"
 	"strings"
 
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/cfs-quota-burst/pkg/koordlet/statesinformer"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	clientset "k8s.io/client-go/kubernetes"
 	cliflag "k8s.io/component-base/cli/flag"
