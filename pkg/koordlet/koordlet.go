@@ -28,9 +28,11 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
 
+	clientsetbeta1 "github.com/clay-wangzhi/koordinator/pkg/client/clientset/versioned"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/config"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/prediction"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
@@ -55,6 +57,7 @@ type daemon struct {
 	statesInformer statesinformer.StatesInformer
 	metricCache    metriccache.MetricCache
 	qosManager     qosmanager.QOSManager
+	predictServer  prediction.PredictServer
 	executor       resourceexecutor.ResourceUpdateExecutor
 }
 
@@ -68,12 +71,16 @@ func NewDaemon(config *config.Configuration) (Daemon, error) {
 	klog.Infof("sysconf: %+v, agentMode: %v", system.Conf, system.AgentMode)
 
 	kubeClient := clientset.NewForConfigOrDie(config.KubeRestConf)
+	crdClient := clientsetbeta1.NewForConfigOrDie(config.KubeRestConf)
 	metricCache, err := metriccache.NewMetricCache(config.MetricCacheConf)
 	if err != nil {
 		return nil, err
 	}
 
-	statesInformer := statesinformerimpl.NewStatesInformer(config.StatesInformerConf, kubeClient, nodeName)
+	predictServer := prediction.NewPeakPredictServer(config.PredictionConf)
+	predictorFactory := prediction.NewPredictorFactory(predictServer, config.PredictionConf.ColdStartDuration, config.PredictionConf.SafetyMarginPercent)
+
+	statesInformer := statesinformerimpl.NewStatesInformer(config.StatesInformerConf, kubeClient, crdClient, metricCache, nodeName, predictorFactory)
 
 	cgroupDriver := system.GetCgroupDriver()
 	system.SetupCgroupPathFormatter(cgroupDriver)
@@ -91,6 +98,7 @@ func NewDaemon(config *config.Configuration) (Daemon, error) {
 		statesInformer: statesInformer,
 		metricCache:    metricCache,
 		qosManager:     qosManager,
+		predictServer:  predictServer,
 		executor:       resourceexecutor.NewResourceUpdateExecutor(),
 	}
 
@@ -131,6 +139,16 @@ func (d *daemon) Run(stopCh <-chan struct{}) {
 	if !cache.WaitForCacheSync(stopCh, d.metricAdvisor.HasSynced) {
 		klog.Fatal("time out waiting for metric advisor to sync")
 	}
+
+	// start predict server
+	go func() {
+		if err := d.predictServer.Setup(d.statesInformer, d.metricCache); err != nil {
+			klog.Fatal("Unable to setup the predict server: ", err)
+		}
+		if err := d.predictServer.Run(stopCh); err != nil {
+			klog.Fatal("Unable to run the predict server: ", err)
+		}
+	}()
 
 	// start qos manager
 	go func() {

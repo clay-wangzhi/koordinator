@@ -13,6 +13,7 @@ COPY go.sum go.sum
 
 RUN go mod download
 
+COPY apis/ apis/
 COPY cmd/ cmd/
 COPY pkg/ pkg/
 

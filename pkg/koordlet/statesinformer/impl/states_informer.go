@@ -19,13 +19,17 @@ package impl
 import (
 	"fmt"
 
+	koordclientset "github.com/clay-wangzhi/koordinator/pkg/client/clientset/versioned"
 	"go.uber.org/atomic"
 	corev1 "k8s.io/api/core/v1"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientset "k8s.io/client-go/kubernetes"
+
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
 
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/prediction"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
 )
 
@@ -45,20 +49,24 @@ type StatesInformer interface {
 type PluginName string
 
 type PluginOption struct {
-	config     *Config
-	KubeClient clientset.Interface
-	NodeName   string
+	config      *Config
+	KubeClient  clientset.Interface
+	KoordClient koordclientset.Interface
+	NodeName    string
 }
 
 type PluginState struct {
-	informerPlugins map[PluginName]informerPlugin
+	metricCache      metriccache.MetricCache
+	informerPlugins  map[PluginName]informerPlugin
+	predictorFactory prediction.PredictorFactory
 }
 
 type statesInformer struct {
-	config  *Config
-	option  *PluginOption
-	states  *PluginState
-	started *atomic.Bool
+	config       *Config
+	metricsCache metriccache.MetricCache
+	option       *PluginOption
+	states       *PluginState
+	started      *atomic.Bool
 }
 
 type informerPlugin interface {
@@ -68,15 +76,18 @@ type informerPlugin interface {
 }
 
 // TODO merge all clients into one struct
-func NewStatesInformer(config *Config, kubeClient clientset.Interface,
-	nodeName string) StatesInformer {
+func NewStatesInformer(config *Config, kubeClient clientset.Interface, crdClient koordclientset.Interface, metricsCache metriccache.MetricCache,
+	nodeName string, predictorFactory prediction.PredictorFactory) StatesInformer {
 	opt := &PluginOption{
-		config:     config,
-		KubeClient: kubeClient,
-		NodeName:   nodeName,
+		config:      config,
+		KubeClient:  kubeClient,
+		KoordClient: crdClient,
+		NodeName:    nodeName,
 	}
 	stat := &PluginState{
-		informerPlugins: map[PluginName]informerPlugin{},
+		metricCache:      metricsCache,
+		informerPlugins:  map[PluginName]informerPlugin{},
+		predictorFactory: predictorFactory,
 	}
 	s := &statesInformer{
 		config:  config,

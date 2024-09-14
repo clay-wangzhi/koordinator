@@ -16,9 +16,13 @@ limitations under the License.
 
 package impl
 
-var DefaultPluginRegistry = map[PluginName]informerPlugin{
-	nodeInformerName:       NewNodeInformer(),
-	podsInformerName:       NewPodsInformer(),
-	cmInformerName:         NewCmInformer(),
-	nodeMetricInformerName: NewNodeMetricInformer(),
-}
+import (
+	corev1 "k8s.io/api/core/v1"
+
+	slov1alpha1 "github.com/clay-wangzhi/koordinator/apis/slo/v1alpha1"
+)
+
+// NOTE: functions in this file can be overwritten for extension
+
+// fillExtensionMap would fill the Extensions field in PodMetricInfo
+func (r *nodeMetricInformer) fillExtensionMap(info *slov1alpha1.PodMetricInfo, pod *corev1.Pod) {}

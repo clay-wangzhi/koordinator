@@ -21,6 +21,7 @@ import (
 
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
 	maframework "github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/prediction"
 	qmframework "github.com/clay-wangzhi/koordinator/pkg/koordlet/qosmanager/framework"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
 	statesinformerimpl "github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer/impl"
@@ -42,6 +43,7 @@ type Configuration struct {
 	CollectorConf      *maframework.Config
 	MetricCacheConf    *metriccache.Config
 	QOSManagerConf     *qmframework.Config
+	PredictionConf     *prediction.Config
 }
 
 func NewConfiguration() *Configuration {
@@ -52,6 +54,7 @@ func NewConfiguration() *Configuration {
 		CollectorConf:      maframework.NewDefaultConfig(),
 		MetricCacheConf:    metriccache.NewDefaultConfig(),
 		QOSManagerConf:     qmframework.NewDefaultConfig(),
+		PredictionConf:     prediction.NewDefaultConfig(),
 	}
 }
 

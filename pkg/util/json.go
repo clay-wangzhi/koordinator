@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package impl
+package util
 
-var DefaultPluginRegistry = map[PluginName]informerPlugin{
-	nodeInformerName:       NewNodeInformer(),
-	podsInformerName:       NewPodsInformer(),
-	cmInformerName:         NewCmInformer(),
-	nodeMetricInformerName: NewNodeMetricInformer(),
+import "encoding/json"
+
+// DumpJSON returns the JSON encoding
+func DumpJSON(o interface{}) string {
+	j, _ := json.Marshal(o)
+	return string(j)
 }
