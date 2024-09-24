@@ -19,7 +19,10 @@ package metricsadvisor
 import (
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/nodeinfo"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/noderesource"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/podresource"
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/podthrottled"
+	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/collectors/sysresource"
+
 	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metricsadvisor/framework"
 )
 
@@ -30,5 +33,7 @@ var (
 		noderesource.CollectorName: noderesource.New,
 		nodeinfo.CollectorName:     nodeinfo.New,
 		podthrottled.CollectorName: podthrottled.New,
+		sysresource.CollectorName:  sysresource.New,
+		podresource.CollectorName:  podresource.New,
 	}
 )

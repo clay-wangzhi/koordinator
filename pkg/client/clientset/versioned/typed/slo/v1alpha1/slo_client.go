@@ -29,6 +29,7 @@ import (
 type SloV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	NodeMetricsGetter
+	NodeSLOsGetter
 }
 
 // SloV1alpha1Client is used to interact with features provided by the slo group.
@@ -38,6 +39,10 @@ type SloV1alpha1Client struct {
 
 func (c *SloV1alpha1Client) NodeMetrics() NodeMetricInterface {
 	return newNodeMetrics(c)
+}
+
+func (c *SloV1alpha1Client) NodeSLOs() NodeSLOInterface {
+	return newNodeSLOs(c)
 }
 
 // NewForConfig creates a new SloV1alpha1Client for the given config.

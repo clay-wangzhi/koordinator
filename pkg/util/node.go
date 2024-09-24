@@ -20,7 +20,13 @@ import (
 	"fmt"
 
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
+
+// GenerateNodeKey returns a generated key with given meta
+func GenerateNodeKey(node *metav1.ObjectMeta) string {
+	return fmt.Sprintf("%v/%v", node.GetNamespace(), node.GetName())
+}
 
 // GetNodeAddress get node specified type address.
 func GetNodeAddress(node *corev1.Node, addrType corev1.NodeAddressType) (string, error) {

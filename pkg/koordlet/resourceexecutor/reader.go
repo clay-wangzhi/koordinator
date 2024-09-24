@@ -29,6 +29,8 @@ type CgroupReader interface {
 	ReadCPUQuota(parentDir string) (int64, error)
 	ReadCPUPeriod(parentDir string) (int64, error)
 	ReadCPUShares(parentDir string) (int64, error)
+	ReadCPUAcctUsage(parentDir string) (uint64, error)
+	ReadMemoryStat(parentDir string) (*sysutil.MemoryStatRaw, error)
 	ReadCPUStat(parentDir string) (*sysutil.CPUStatRaw, error)
 	ReadCPUProcs(parentDir string) ([]uint32, error)
 }
@@ -90,6 +92,33 @@ func (r *CgroupV1Reader) ReadCPUProcs(parentDir string) ([]uint32, error) {
 
 	// content: `7742\n10971\n11049\n11051...`
 	return sysutil.ParseCgroupProcs(s)
+}
+
+func (r *CgroupV1Reader) ReadCPUAcctUsage(parentDir string) (uint64, error) {
+	resource, ok := sysutil.DefaultRegistry.Get(sysutil.CgroupVersionV1, sysutil.CPUAcctUsageName)
+	if !ok {
+		return 0, ErrResourceNotRegistered
+	}
+	return readCgroupAndParseUint64(parentDir, resource)
+}
+
+func (r *CgroupV1Reader) ReadMemoryStat(parentDir string) (*sysutil.MemoryStatRaw, error) {
+	resource, ok := sysutil.DefaultRegistry.Get(sysutil.CgroupVersionV1, sysutil.MemoryStatName)
+	if !ok {
+		return nil, ErrResourceNotRegistered
+	}
+	s, err := cgroupFileRead(parentDir, resource)
+	if err != nil {
+		return nil, err
+	}
+	// content: `...total_inactive_anon $total_inactive_anon\ntotal_active_anon $total_active_anon\n
+	//           total_inactive_file $total_inactive_file\ntotal_active_file $total_active_file\n
+	//           total_unevictable $total_unevictable\n`
+	v, err := sysutil.ParseMemoryStatRaw(s)
+	if err != nil {
+		return nil, fmt.Errorf("cannot parse cgroup value %s, err: %v", s, err)
+	}
+	return v, nil
 }
 
 var _ CgroupReader = &CgroupV2Reader{}
@@ -184,4 +213,38 @@ func NewCgroupReader() CgroupReader {
 		return &CgroupV2Reader{}
 	}
 	return &CgroupV1Reader{}
+}
+
+func (r *CgroupV2Reader) ReadCPUAcctUsage(parentDir string) (uint64, error) {
+	resource, ok := sysutil.DefaultRegistry.Get(sysutil.CgroupVersionV2, sysutil.CPUAcctUsageName)
+	if !ok {
+		return 0, ErrResourceNotRegistered
+	}
+	s, err := cgroupFileRead(parentDir, resource)
+	if err != nil {
+		return 0, err
+	}
+	// content: "usage_usec 1000000\nuser_usec 800000\nsystem_usec 200000\n..."
+	v, err := sysutil.ParseCPUAcctUsageV2(s)
+	if err != nil {
+		return 0, fmt.Errorf("cannot parse cgroup value %s, err: %v", s, err)
+	}
+	return v, nil
+}
+
+func (r *CgroupV2Reader) ReadMemoryStat(parentDir string) (*sysutil.MemoryStatRaw, error) {
+	resource, ok := sysutil.DefaultRegistry.Get(sysutil.CgroupVersionV2, sysutil.MemoryStatName)
+	if !ok {
+		return nil, ErrResourceNotRegistered
+	}
+	s, err := cgroupFileRead(parentDir, resource)
+	if err != nil {
+		return nil, err
+	}
+	// content: `anon 0\nfile 0\nkernel_stack 0\n...inactive_anon 0\nactive_anon 0\n...`
+	v, err := sysutil.ParseMemoryStatRawV2(s)
+	if err != nil {
+		return nil, fmt.Errorf("cannot parse cgroup value %s, err: %v", s, err)
+	}
+	return v, nil
 }

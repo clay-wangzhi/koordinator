@@ -45,11 +45,11 @@ echo ">> Temporary output directory ${TEMP_DIR}"
 # --output-base    because this script should also be able to run inside the vendor dir of
 #                  k8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
 #                  instead of the $GOPATH directly. For normal projects this can be dropped.
-# $SCRIPT_ROOT/hack/generate-groups.sh "client,informer,lister" \
-#  github.com/clay-wangzhi/koordinator/pkg/client github.com/clay-wangzhi/koordinator/apis \
-#  "slo:v1alpha1" \
-#  --output-base "${TEMP_DIR}" \
-#  --go-header-file hack/boilerplate/boilerplate.go.txt
+$SCRIPT_ROOT/hack/generate-groups.sh "client,informer,lister" \
+ github.com/clay-wangzhi/koordinator/pkg/client github.com/clay-wangzhi/koordinator/apis \
+ "slo:v1alpha1" \
+ --output-base "${TEMP_DIR}" \
+ --go-header-file hack/boilerplate/boilerplate.go.txt
 
 ${SCRIPT_ROOT}/hack/generate-internal-groups.sh \
   "deepcopy,conversion,defaulter" \

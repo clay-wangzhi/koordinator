@@ -199,11 +199,11 @@ func (b *cpuBurst) start() {
 		// merge burst config from pod and node
 		cpuBurstCfg := genPodBurstConfig(podMeta.Pod, cfsCm)
 		if cpuBurstCfg == nil {
-			klog.Warningf("pod %v/%v burst config illegal, burst config %v",
+			klog.V(5).Infof("pod %v/%v burst config illegal, burst config %v",
 				podMeta.Pod.Namespace, podMeta.Pod.Name, cpuBurstCfg)
 			continue
 		}
-		klog.V(5).Infof("get pod %v/%v cpu burst config: %v", podMeta.Pod.Namespace, podMeta.Pod.Name, cpuBurstCfg)
+		klog.Infof("get pod %v/%v cpu burst config: %v", podMeta.Pod.Namespace, podMeta.Pod.Name, cpuBurstCfg)
 		// scale cpu.cfs_quota_us for pod and containers
 		b.applyCFSQuotaBurst(cpuBurstCfg, podMeta, nodeState)
 	}

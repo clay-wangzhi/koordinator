@@ -14,18 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package framework
+package nodemetric
 
 import (
-	"github.com/clay-wangzhi/koordinator/pkg/koordlet/metriccache"
-	"github.com/clay-wangzhi/koordinator/pkg/koordlet/resourceexecutor"
-	"github.com/clay-wangzhi/koordinator/pkg/koordlet/statesinformer"
+	"fmt"
+
+	corev1 "k8s.io/api/core/v1"
+
+	slov1alpha1 "github.com/clay-wangzhi/koordinator/apis/slo/v1alpha1"
 )
 
-type Options struct {
-	Config         *Config
-	StatesInformer statesinformer.StatesInformer
-	MetricCache    metriccache.MetricCache
-	CgroupReader   resourceexecutor.CgroupReader
-	PodFilters     map[string]PodFilter
+func (r *NodeMetricReconciler) initNodeMetric(node *corev1.Node, nodeMetric *slov1alpha1.NodeMetric) error {
+	if node == nil || nodeMetric == nil {
+		return fmt.Errorf("both Node and NodeMetric should not be empty")
+	}
+
+	nodeMetricSpec, err := r.getNodeMetricSpec(node, nil)
+	if err != nil {
+		return err
+	}
+
+	nodeMetric.Spec = *nodeMetricSpec
+	nodeMetric.SetName(node.GetName())
+	nodeMetric.SetNamespace(node.GetNamespace())
+
+	return nil
 }
