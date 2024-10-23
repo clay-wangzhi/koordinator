@@ -122,6 +122,7 @@ func (p *Plugin) EventsToRegister() []framework.ClusterEventWithHint {
 }
 
 func (p *Plugin) Filter(ctx context.Context, state *framework.CycleState, pod *corev1.Pod, nodeInfo *framework.NodeInfo) *framework.Status {
+	klog.Infoln("Enter load_aware.")
 	node := nodeInfo.Node()
 	if node == nil {
 		return framework.NewStatus(framework.Error, "node not found")
