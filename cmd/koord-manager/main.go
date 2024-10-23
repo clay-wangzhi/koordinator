@@ -48,6 +48,7 @@ import (
 	metricsutil "github.com/clay-wangzhi/koordinator/pkg/util/metrics"
 	_ "github.com/clay-wangzhi/koordinator/pkg/util/metrics/leadership"
 	"github.com/clay-wangzhi/koordinator/pkg/util/sloconfig"
+	"github.com/clay-wangzhi/koordinator/pkg/webhook"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -138,6 +139,11 @@ func main() {
 	installMetricsHandler(mgrOpt)
 	ctx := ctrl.SetupSignalHandler()
 
+	if utilfeature.DefaultFeatureGate.Enabled(features.WebhookFramework) {
+		setupLog.Info("setup webhook opt")
+		webhook.SetupWithWebhookOpt(&mgrOpt)
+	}
+
 	mgr, err := ctrl.NewManager(cfg, mgrOpt)
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
@@ -157,6 +163,32 @@ func main() {
 
 	extensions.PrepareExtensions(cfg, mgr)
 	// +kubebuilder:scaffold:builder
+
+	if utilfeature.DefaultFeatureGate.Enabled(features.WebhookFramework) {
+		setupLog.Info("setup webhook")
+		if err = webhook.SetupWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to setup webhook")
+			os.Exit(1)
+		}
+		setupLog.Info("initialize webhook")
+		if err := webhook.Initialize(ctx, cfg); err != nil {
+			setupLog.Error(err, "unable to initialize webhook")
+			os.Exit(1)
+		}
+		if err := mgr.AddReadyzCheck("webhook-ready", webhook.Checker); err != nil {
+			setupLog.Error(err, "unable to add readyz check")
+			os.Exit(1)
+		}
+		go func() {
+			setupLog.Info("wait webhook ready")
+			if err = webhook.WaitReady(); err != nil {
+				setupLog.Error(err, "unable to wait webhook ready")
+				os.Exit(1)
+			}
+		}()
+	} else {
+		klog.V(4).Infof("webhook framework feature gate not enabled")
+	}
 
 	setupLog.Info("starting manager")
 	extensions.StartExtensions(ctx, mgr)
